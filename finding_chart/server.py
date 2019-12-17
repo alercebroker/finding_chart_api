@@ -31,7 +31,15 @@ STATIC_PATH = os.path.join(os.path.dirname(__file__),"static")
 
 def render_pdf(html):
     file = f"/tmp/{uuid.uuid4()}_findingchart"
-    pdfkit.from_string(html,file,css=[os.path.join(STATIC_PATH,"css/template.css"),os.path.join(STATIC_PATH,"css/bootstrap.min.css")])
+    options = {
+        'page-size': 'Letter',
+        'margin-top': '0in',
+        'margin-right': '0in',
+        'margin-bottom': '0in',
+        'margin-left': '0in',
+        'no-outline': None
+    }
+    pdfkit.from_string(html,file,options=options,css=[os.path.join(STATIC_PATH,"css/template.css"),os.path.join(STATIC_PATH,"css/bootstrap.min.css")])
     with open(file,"rb") as f:
         pdf = f.read()
     os.remove(file)
