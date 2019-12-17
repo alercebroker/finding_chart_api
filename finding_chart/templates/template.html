@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- <link rel="stylesheet" type="text/css" href="static/css/template.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"> -->
+
+</head>
+<body>
+  <div class="container">
+    <div class="p-3 row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-1">
+            <img src="{{logo_path}}" width="50" height="50" class="d-inline-block align-top" alt="">
+          </div>
+          <div class="col-11">
+            <div class="h2">
+              {{oid}} Finding Chart
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-8 text-center">
+          <img src="data:image/png;base64,{{panstarrs_image}}"></img>
+        </div>
+        <div class="col-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="text-center">
+                <img class="cutout" src="https://avro.alerce.online/get_stamp?oid={{oid}}&candid={{candid}}&type=science&format=png" ><br>
+                <h4 class="text-center">Science Cutout</h4>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="text-center">
+                <img class="cutout" src="https://avro.alerce.online/get_stamp?oid={{oid}}&candid={{candid}}&type=template&format=png" ><br>
+                <h4 class="text-center">Template Cutout</h4>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="text-center">
+                <img class="cutout" src="https://avro.alerce.online/get_stamp?oid={{oid}}&candid={{candid}}&type=difference&format=png" ><br>
+                <h4 class="text-center">Difference Cutout</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center">
+          <table class="table table-striped">
+            <thead>
+              <th></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Position
+                </td>
+                <td>
+                  (ra) {{ra}} , (dec) {{dec}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Mean Magnitude (r)
+                </td>
+                <td>
+                  {{stats["mean_magpsf_r"]}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Mean Magnitude (g)
+                </td>
+                <td>
+                  {{stats["mean_magpsf_g"]}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Discovery Date
+                </td>
+                <td>
+                  {{stats["first_detection"]}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Last Detection Date
+                </td>
+                <td>
+                  {{stats["last_detection"]}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</body>
+</html>
