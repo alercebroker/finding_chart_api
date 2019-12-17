@@ -26,20 +26,13 @@ from astropy.time import Time
 PANSTARR_FILE_PATH = "http://ps1images.stsci.edu/cgi-bin/ps1filenames.py"
 PANSTARR_CUTOUT_PATH = "http://ps1images.stsci.edu/cgi-bin/fitscut.cgi"
 
-STATIC_PATH = os.path.join(os.path.dirname(__file__),"static")
-
+STATIC_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),"static")
+CSS_PATH = [os.path.join(STATIC_PATH,"css/template.css"),os.path.join(STATIC_PATH,"css/bootstrap.min.css")]
+print(CSS_PATH)
 
 def render_pdf(html):
     file = f"/tmp/{uuid.uuid4()}_findingchart"
-    options = {
-        'page-size': 'Letter',
-        'margin-top': '0in',
-        'margin-right': '0in',
-        'margin-bottom': '0in',
-        'margin-left': '0in',
-        'no-outline': None
-    }
-    pdfkit.from_string(html,file,options=options,css=[os.path.join(STATIC_PATH,"css/template.css"),os.path.join(STATIC_PATH,"css/bootstrap.min.css")])
+    pdfkit.from_string(html,file)
     with open(file,"rb") as f:
         pdf = f.read()
     os.remove(file)
@@ -62,6 +55,7 @@ def index():
 def get_chart():
     oid  = request.args.get('oid')
     candid = request.args.get('candid')
+    size = request.args.get('size', default=1000)
 
     if oid is None:
         return jsonify({"error":"Missing oid parameter"}),400
@@ -77,7 +71,7 @@ def get_chart():
     logo_path = os.path.join(STATIC_PATH,"img/logo.png")
 
     #Getting image
-    img = getgrayim(ra=stats.meanra,dec=stats.meandec,size=1000,output_size=701)
+    img = getgrayim(ra=stats.meanra,dec=stats.meandec,size=size,output_size=701)
     img = PIL.ImageOps.invert(img)
     img  = np.asarray(img)
 
@@ -99,7 +93,7 @@ def get_chart():
     axes.text(701-34,701-80, "N", color=color)
 
     #Text
-    string = "PanSTARRS DR1\nra: {} dec: {}\nscale: 0.25 arcsec/pix\nfield size: 250 arcsec".format(np.round(stats.meanra,5),np.round(stats.meandec,5))
+    string = "PanSTARRS DR1\nra: {} dec: {}\nscale: 0.25 arcsec/pix\nfield size: {} arcsec".format(np.round(stats.meanra,5),np.round(stats.meandec,5), size*0.25)
     axes.text(0.02, 0.98, string,color=color, transform=axes.transAxes, fontsize=9,
         verticalalignment='top')
 
@@ -125,12 +119,14 @@ def get_chart():
 
 
     html = render_template(
-        'template.html', ra=ra, dec=dec, oid = oid, candid = candid, logo_path=logo_path, stats=stats, panstarrs_image = img_str)
+        'template.html', ra=ra, dec=dec, oid = oid, candid = candid,
+         logo_path=logo_path, stats=stats, panstarrs_image = img_str )
     pdf = render_pdf(html)
     headers = {
         'content-type': 'application.pdf',
         'content-disposition': f'attachment; filename={oid}-{candid}-finding_chart.pdf'}
     return pdf, 200, headers
+    # return html
 
 if __name__ == "__main__":
     app.run(debug=True)
