@@ -111,7 +111,7 @@ def get_chart():
 
     c = ICRS(stats.meanra*u.degree, stats.meandec*u.degree)
     ra = c.ra.to_string(u.hour)
-    dec = c.dec.to_string(u.hour)
+    dec = c.dec.to_string()
     stats["first_detection"] = Time(stats["firstmjd"], format="mjd")
     stats["first_detection"].format = 'datetime'
     stats["last_detection"] = Time(stats["lastmjd"], format="mjd")
