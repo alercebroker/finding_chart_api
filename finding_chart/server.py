@@ -52,7 +52,7 @@ def get_chart():
     if candid is None:
         dets = api.query_detections(oid, format="pandas")
         if len(dets) > 0:
-            candid = dets.iloc[0].name
+            candid = dets[dets.has_stamps].iloc[0].name
         else:
             return jsonify({"error": "object doesn't have detections"}), 400
 
