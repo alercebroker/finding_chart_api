@@ -1,5 +1,5 @@
 astropy>=3.2.1
-alerce>=0.2.3
+alerce>=1.0.1
 pandas>=0.24
 Pillow>=6.0
 Flask>=1.0.0

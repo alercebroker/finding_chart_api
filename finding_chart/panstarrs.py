@@ -4,7 +4,7 @@ from astropy.table import Table
 import requests
 from PIL import Image
 from io import BytesIO
-import pylab
+
 
 def getimages(ra,dec,size=240,filters="grizy"):
 
@@ -102,7 +102,7 @@ def getgrayim(ra, dec, size=240, output_size=None, filter="g", format="jpg"):
         raise ValueError("format must be jpg or png")
     if filter not in list("grizy"):
         raise ValueError("filter must be one of grizy")
-    url = geturl(ra,dec,size=size,filters=filter,output_size=output_size,format=format)
+    url = geturl(ra, dec, size=size, filters=filter, output_size=output_size, format=format)
     r = requests.get(url[0])
     im = Image.open(BytesIO(r.content))
     return im
