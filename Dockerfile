@@ -15,4 +15,4 @@ COPY . /app
 EXPOSE 8000
 
 WORKDIR /app
-CMD ["gunicorn", "--bind", "0.0.0.0", "finding_chart.server.app"]
+CMD ["gunicorn", "--bind", "0.0.0.0", "finding_chart.server:app"]
