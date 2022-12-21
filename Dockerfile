@@ -14,5 +14,5 @@ RUN apt-get install -y libssl1.0-dev
 COPY . /app
 EXPOSE 8000
 
-WORKDIR /app/scripts
-CMD ["gunicorn", "--bind", "0.0.0.0", "--workers", "4", "run_server"]
+WORKDIR /app
+CMD ["gunicorn", "--bind", "0.0.0.0", "finding_chart.server.app"]
