@@ -33,6 +33,7 @@ def index():
 
 @app.route("/get_chart")
 def get_chart():
+    #              --------------------controlador o FastAPI?---------------------
     oid = request.args.get("oid")
     candid = request.args.get("candid")
     size = request.args.get("size", default=1000)
@@ -47,6 +48,8 @@ def get_chart():
         else:
             return jsonify({"error": "object doesn't have detections"}), 400
 
+    # ------------------- Consultar -------------------
+
     stats = api.query_objects(oid=oid, format="pandas")
     magstats = api.query_magstats(oid=oid)
     stats = stats.iloc[0]
@@ -55,7 +58,9 @@ def get_chart():
     logo_path = os.path.join(STATIC_PATH, "img/logo.png")
 
     # Getting image
-    img = getgrayim(ra=stats.meanra, dec=stats.meandec, size=size, output_size=701)
+    img = getgrayim(
+        ra=stats.meanra, dec=stats.meandec, size=size, output_size=701
+    )  # se llama a panstarrs
     img = PIL.ImageOps.invert(img)
     img = np.asarray(img)
 
@@ -64,6 +69,7 @@ def get_chart():
     color = "blue"
     alpha = 0.3
     # Adding cross
+    #              --------------------modelo---------------------
     axes.plot([0, 300], [351, 351], c=color, alpha=alpha)
     axes.plot([701, 401], [351, 351], c=color, alpha=alpha)
     axes.plot([351, 351], [0, 300], c=color, alpha=alpha)
@@ -89,7 +95,7 @@ def get_chart():
     )
 
     axes.axis("off")
-
+    #              --------------------presentador(es)---------------------
     buf = BytesIO()
     plt.savefig(buf, format="jpg", bbox_inches="tight", transparent=True)
     buf.seek(0)
