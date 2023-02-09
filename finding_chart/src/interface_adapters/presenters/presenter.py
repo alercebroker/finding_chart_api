@@ -1,7 +1,7 @@
 from flask import render_template
 
 
-def get_fig_template(ra, dec, oid, candid, logo_path, stats, img_str):
+def get_chart_template(ra, dec, oid, candid, logo_path, stats, img_str):
     html = render_template(
         "template.html",
         ra=ra,
