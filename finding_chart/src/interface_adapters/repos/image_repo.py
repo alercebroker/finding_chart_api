@@ -1,5 +1,5 @@
 from __future__ import print_function
-from use_cases.interfaces.image_interface import IImageRepo
+from finding_chart.src.use_cases.interfaces.image_interface import IImageRepo
 import numpy
 from astropy.table import Table
 import requests

@@ -3,20 +3,28 @@ import base64
 import matplotlib.pyplot as plt
 from io import BytesIO
 import PIL.ImageOps
-from entities.figure_model import FigureModel
+from finding_chart.src.entities.figure_model import FigureModel
 from astropy.coordinates import ICRS
 from astropy import units as u
 from astropy.time import Time
+from finding_chart.src.use_cases.interfaces.object_interface import IObjectRepo
+from finding_chart.src.use_cases.interfaces.image_interface import IImageRepo
 
 
-def get_object_stats(object_repo, api, oid, format):
+def get_object_stats(object_repo: IObjectRepo, api, oid, format):
     return object_repo.get_stats(api, oid, format)
 
 
 def get_gray_img(
-    image_repo, PANSTARR_FILE_PATH, PANSTARR_CUTOUT_PATH, ra, dec, size, output_size
+    image_repo_interface: IImageRepo,
+    PANSTARR_FILE_PATH,
+    PANSTARR_CUTOUT_PATH,
+    ra,
+    dec,
+    size,
+    output_size,
 ):
-    return image_repo.get_gray_img(
+    return image_repo_interface.get_gray_image(
         PANSTARR_FILE_PATH, PANSTARR_CUTOUT_PATH, ra, dec, size, output_size
     )
 

@@ -1,16 +1,16 @@
 from alerce.core import Alerce
 from flask import jsonify
 import os
-from use_cases.services.service import (
+from finding_chart.src.use_cases.services.service import (
     get_chart_image,
     get_object_stats,
     get_gray_img,
     get_ICRS_coords,
     format_first_and_last_detection,
 )
-from interface_adapters.presenters.presenter import get_chart_template
-from interface_adapters.repos.image_repo import ImageRepo
-from interface_adapters.repos.object_repo import ObjectRepo
+from finding_chart.src.interface_adapters.presenters.presenter import get_chart_template
+from finding_chart.src.interface_adapters.repos.image_repo import ImageRepo
+from finding_chart.src.interface_adapters.repos.object_repo import ObjectRepo
 
 api = Alerce()
 img_repo = ImageRepo()
@@ -18,11 +18,9 @@ object_repo = ObjectRepo()
 
 PANSTARR_FILE_PATH = "http://ps1images.stsci.edu/cgi-bin/ps1filenames.py"
 PANSTARR_CUTOUT_PATH = "http://ps1images.stsci.edu/cgi-bin/fitscut.cgi"
-STATIC_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "static")
-logo_path = os.path.join(STATIC_PATH, "img/logo.png")
 
 
-def controller_get_chart(request):
+def controller_get_chart(request, logo_path):
     oid = request.args.get("oid")
     candid = request.args.get("candid")
     size = request.args.get("size", default=1000)
@@ -51,4 +49,4 @@ def controller_get_chart(request):
     ra, dec = get_ICRS_coords(stats)
     format_first_and_last_detection(stats)
 
-    return get_chart_template(ra, dec, candid, logo_path, stats, img_str)
+    return get_chart_template(ra, dec, oid, candid, logo_path, stats, img_str)
