@@ -3,12 +3,12 @@ import base64
 import matplotlib.pyplot as plt
 from io import BytesIO
 import PIL.ImageOps
-from finding_chart.src.entities.figure_model import FigureModel
+from src.entities.figure_model import FigureModel
 from astropy.coordinates import ICRS
 from astropy import units as u
 from astropy.time import Time
-from finding_chart.src.use_cases.interfaces.object_interface import IObjectRepo
-from finding_chart.src.use_cases.interfaces.image_interface import IImageRepo
+from src.use_cases.interfaces.object_interface import IObjectRepo
+from src.use_cases.interfaces.image_interface import IImageRepo
 
 
 def get_object_stats(object_repo: IObjectRepo, api, oid, format):

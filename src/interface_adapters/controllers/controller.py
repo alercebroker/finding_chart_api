@@ -1,16 +1,16 @@
 from alerce.core import Alerce
 from flask import jsonify
 import os
-from finding_chart.src.use_cases.services.service import (
+from src.use_cases.services.service import (
     get_chart_image,
     get_object_stats,
     get_gray_img,
     get_ICRS_coords,
     format_first_and_last_detection,
 )
-from finding_chart.src.interface_adapters.presenters.presenter import get_chart_template
-from finding_chart.src.interface_adapters.repos.image_repo import ImageRepo
-from finding_chart.src.interface_adapters.repos.object_repo import ObjectRepo
+from src.interface_adapters.presenters.presenter import get_chart_template
+from src.interface_adapters.repos.image_repo import ImageRepo
+from src.interface_adapters.repos.object_repo import ObjectRepo
 
 api = Alerce()
 img_repo = ImageRepo()

@@ -1,4 +1,4 @@
-from finding_chart.src.interface_adapters.controllers.controller import (
+from src.interface_adapters.controllers.controller import (
     controller_get_chart,
 )
 

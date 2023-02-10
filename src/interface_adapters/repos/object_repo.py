@@ -1,4 +1,4 @@
-from finding_chart.src.use_cases.interfaces.object_interface import IObjectRepo
+from src.use_cases.interfaces.object_interface import IObjectRepo
 
 
 class ObjectRepo(IObjectRepo):
