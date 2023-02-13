@@ -29,8 +29,14 @@ def index():
     return "ALeRCE Finding Chart Generator"
 
 
+@dataclass
+class GetChartInput:
+    oid: str = Query(description="Object ID.")
+    candid: float = Query(description="candid")
+
+
 @app.get("/get_chart")
-def get_chart():
+def get_chart(params: GetChartInput = Depends()):
     return controller_get_chart(params, logo_path)
 
 
