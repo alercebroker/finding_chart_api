@@ -29,34 +29,81 @@ def get_gray_img(
     )
 
 
+# tests esto.
 def img_to_np_array(img):
+    f = open("img_test1.txt", "w")
+    print(img, file=f)
+    f.close()
     img = PIL.ImageOps.invert(img)
     img = np.asarray(img)
+
+    f = open("result_img_test1.txt", "w")
+    print(img, file=f)
+    f.close()
     return img
 
 
+# tests esto.
 def get_figure(img, stats, size):
+    f = open("img_test2.txt", "w")
+    print(img, file=f)
+    f.close()
+    f = open("stats_test2.txt", "w")
+    print(stats, file=f)
+    f.close()
+    f = open("size_test2.txt", "w")
+    print(size, file=f)
+    f.close()
     model = FigureModel(img, stats, size)
-    model.create_figure()
-    fig = model.add_figure_text()
+    fig, axes = model.create_figure()
+    fig = model.add_figure_text(fig, axes)
+    f = open("result_figure_test2.txt", "w")
+    print(fig, file=f)
+    f.close()
     return fig
 
 
+# tests esto con mock de base64 o de bytesIO ¡consultar!
 def fig_img_to_string(figure):
+    f = open("figure_test3.txt", "w")
+    print(figure, file=f)
+    f.close()
     buf = BytesIO()
+    f = open("buf.txt", "w")
+    print(buf, file=f)
+    f.close()
     figure.savefig(buf, format="jpg", bbox_inches="tight", transparent=True)
     buf.seek(0)
     im = buf.read()
-    img_str = base64.b64encode(im).decode("utf-8")
+    img_str = base64.b64encode(im)
+    f = open("encoder_test3.txt", "w")
+    print(img_str, file=f)
+    f.close()
+    img_str = base64.b64decode("utf-8")
+    f = open("decoder_test3.txt", "w")
+    print(img_str, file=f)
+    f.close()
 
     return img_str
 
 
+# tests esto con mock de ICRS
 def get_ICRS_coords(stats):
     coords = ICRS(stats.meanra * u.degree, stats.meandec * u.degree)
+    f = open("result_ICRS_test4.txt", "w")
+    print(coords, file=f)
+    f.close()
+    f = open("stats_test4.txt", "w")
+    print(stats, file=f)
+    f.close()
     ra = coords.ra.to_string(u.hour)
     dec = coords.dec.to_string()
-
+    f = open("ra_test4.txt", "w")
+    print(ra, file=f)
+    f.close()
+    f = open("dec_test4.txt", "w")
+    print(dec, file=f)
+    f.close()
     return ra, dec
 
 
