@@ -1,15 +1,19 @@
-from flask import render_template
+from fastapi.templating import Jinja2Templates
 
 
-def get_chart_template(ra, dec, oid, candid, logo_path, stats, img_str):
-    html = render_template(
+def get_chart_template(TEMPLATES_PATH, request, ra, dec, oid, candid, stats, img_str):
+
+    templates = Jinja2Templates(directory=TEMPLATES_PATH)
+
+    return templates.TemplateResponse(
         "template.html",
-        ra=ra,
-        dec=dec,
-        oid=oid,
-        candid=candid,
-        logo_path=logo_path,
-        stats=stats,
-        panstarrs_image=img_str,
+        {
+            "request": request,
+            "ra": ra,
+            "dec": dec,
+            "oid": oid,
+            "candid": candid,
+            "stats": stats,
+            "panstarrs_image": img_str,
+        },
     )
-    return html, 200

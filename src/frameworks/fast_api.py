@@ -1,6 +1,9 @@
 import os
 import uvicorn
-from fastapi import FastAPI, Query, Depends
+from fastapi import FastAPI, Request, Query, Depends
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+
 
 from src.interface_adapters.controllers.controller import (
     controller_get_chart,
@@ -16,12 +19,9 @@ app = FastAPI(
 
 
 STATIC_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "static")
-CSS_PATH = [
-    os.path.join(STATIC_PATH, "css/template.css"),
-    os.path.join(STATIC_PATH, "css/bootstrap.min.css"),
-]
+TEMPLATES_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "templates")
 
-logo_path = os.path.join(STATIC_PATH, "img/logo.png")
+app.mount("/static", StaticFiles(directory=STATIC_PATH), name="static")
 
 
 @app.get("/")
@@ -32,12 +32,15 @@ def index():
 @dataclass
 class GetChartInput:
     oid: str = Query(description="Object ID.")
-    candid: float = Query(description="candid")
+    candid: str | None = Query(None, description="candid")
 
 
-@app.get("/get_chart")
-def get_chart(params: GetChartInput = Depends()):
-    return controller_get_chart(params, logo_path)
+@app.get("/get_chart", response_class=HTMLResponse)
+def get_chart(
+    request: Request,
+    params: GetChartInput = Depends(),
+):
+    return controller_get_chart(request, params, TEMPLATES_PATH)
 
 
 if __name__ == "__main__":

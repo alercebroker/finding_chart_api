@@ -20,13 +20,10 @@ PANSTARR_FILE_PATH = "http://ps1images.stsci.edu/cgi-bin/ps1filenames.py"
 PANSTARR_CUTOUT_PATH = "http://ps1images.stsci.edu/cgi-bin/fitscut.cgi"
 
 
-def controller_get_chart(request, logo_path):
-    oid = request.args.get("oid")
-    candid = request.args.get("candid")
-    size = request.args.get("size", default=1000)
-
-    if oid is None:
-        return jsonify({"error": "Missing oid parameter"}), 400
+def controller_get_chart(request, params, TEMPLATES_PATH):
+    oid = params.oid
+    candid = params.candid
+    size = 1000
 
     if candid is None:
         dets = api.query_detections(oid, format="pandas")
@@ -49,4 +46,6 @@ def controller_get_chart(request, logo_path):
     ra, dec = get_ICRS_coords(stats)
     format_first_and_last_detection(stats)
 
-    return get_chart_template(ra, dec, oid, candid, logo_path, stats, img_str)
+    return get_chart_template(
+        TEMPLATES_PATH, request, ra, dec, oid, candid, stats, img_str
+    )
