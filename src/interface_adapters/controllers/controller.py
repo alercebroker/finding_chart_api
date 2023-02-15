@@ -45,6 +45,7 @@ def controller_get_chart(request, logo_path):
         size=size,
         output_size=701,
     )
+
     img_str = get_chart_image(img, stats, size)
     ra, dec = get_ICRS_coords(stats)
     format_first_and_last_detection(stats)

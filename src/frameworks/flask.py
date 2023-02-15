@@ -26,6 +26,5 @@ def get_chart():
     return controller_get_chart(request, logo_path)
 
 
-a = 0
 if __name__ == "__main__":
     app.run(debug=True)

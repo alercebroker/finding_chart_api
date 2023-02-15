@@ -1,10 +1,6 @@
-img_test1 = {}
-result_img_test1 = {}
-
-
 img_test2 = {}
 stats_test2 = {}
-size_test2 = 1
+size_test2 = 1000
 result_figure_test2 = {}
 
 result_encode_test3 = {}
