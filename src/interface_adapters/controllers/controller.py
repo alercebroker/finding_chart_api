@@ -1,16 +1,10 @@
 from alerce.core import Alerce
 from flask import jsonify
-import os
-from src.use_cases.services.service import (
-    get_chart_image,
-    get_object_stats,
-    get_gray_img,
-    get_ICRS_coords,
-    format_first_and_last_detection,
-)
+from src.interface_adapters.controllers.parser import parse_controller_info_to_dto
 from src.interface_adapters.presenters.presenter import get_chart_template
 from src.interface_adapters.repos.image_repo import ImageRepo
 from src.interface_adapters.repos.object_repo import ObjectRepo
+from src.use_cases.gather_template_info import gather_template_info
 
 api = Alerce()
 img_repo = ImageRepo()
@@ -35,18 +29,8 @@ def controller_get_chart(request, logo_path):
         else:
             return jsonify({"error": "object doesn't have detections"}), 400
 
-    stats = get_object_stats(object_repo, api, oid, "pandas")
-    img = get_gray_img(
-        img_repo,
-        PANSTARR_FILE_PATH,
-        PANSTARR_CUTOUT_PATH,
-        ra=stats.meanra,
-        dec=stats.meandec,
-        size=size,
-        output_size=701,
+    request_dto = parse_controller_info_to_dto(
+        object_repo, api, oid, img_repo, PANSTARR_FILE_PATH, PANSTARR_CUTOUT_PATH, size
     )
-    img_str = get_chart_image(img, stats, size)
-    ra, dec = get_ICRS_coords(stats)
-    format_first_and_last_detection(stats)
 
-    return get_chart_template(ra, dec, oid, candid, logo_path, stats, img_str)
+    return get_chart_template(gather_template_info(request_dto))
