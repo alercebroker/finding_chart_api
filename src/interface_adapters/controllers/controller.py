@@ -17,7 +17,7 @@ PANSTARR_CUTOUT_PATH = "http://ps1images.stsci.edu/cgi-bin/fitscut.cgi"
 def controller_get_chart(request, params, TEMPLATES_PATH):
     oid = params.oid
     candid = params.candid
-    size = 1000
+    size = params.size
 
     if candid is None:
         dets = api.query_detections(oid, format="pandas")
