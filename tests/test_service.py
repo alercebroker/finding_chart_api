@@ -1,10 +1,16 @@
 from PIL import Image
+import filecmp
+import os
+from io import BytesIO
 import matplotlib.pyplot as plt
 import numpy as np
 from unittest import mock, TestCase
 from results_service import (
+    img_test1,
+    result_img_test1,
     size_test2,
-    result_figure_test2,
+    img_test2,
+    stats_test2,
     result_encode_test3,
     result_decode_test3,
     figure_test3,
@@ -25,31 +31,19 @@ import pandas as pd
 
 class TestService(TestCase):
     def test_img_to_np_array(self):
-        img_test1 = Image.open(
-            "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/img_test1.jpg"
-        )
-        img_test1 = img_test1.convert("L")
         result = img_to_np_array(img_test1)
-        result_img_test1 = np.loadtxt(
-            "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/result_img_test1.txt"
-        )
-
         self.assertEqual(result.tolist(), result_img_test1.tolist())
 
     def test_get_figure(self):
-        img_test2 = np.loadtxt(
-            "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/img_test2.txt"
-        )
-        stats_test2 = pd.read_pickle(
-            "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/stats_test2.pkl"
-        )
-        result_figure_test2 = Image.open(
-            "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/result_figure_test2.png"
-        )
         result = get_figure(img_test2, stats_test2, size_test2)
-        fig, ax = plt.subplots()
-        result_figure_test2 = ax.imshow(result_figure_test2)
-        self.assertEqual(np.array(result).tolist(), np.array(fig).tolist())
+        result.savefig("result_temporal.png")
+        self.assertTrue(
+            filecmp.cmp(
+                "result_temporal.png",
+                "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/result_figure_test2.png",
+            )
+        )
+        os.remove("result_temporal.png")
 
     @mock.patch("src.use_cases.services.service.base64.encode")
     @mock.patch("src.use_cases.services.service.base64.decode")

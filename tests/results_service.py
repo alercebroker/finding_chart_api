@@ -1,7 +1,27 @@
-img_test2 = {}
-stats_test2 = {}
+import numpy as np
+from PIL import Image
+import pandas as pd
+
+img_test1 = Image.open(
+    "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/img_test1.jpg"
+)
+img_test1 = img_test1.convert("L")
+
+result_img_test1 = np.loadtxt(
+    "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/result_img_test1.txt"
+)
+
+img_test2 = np.loadtxt(
+    "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/img_test2.txt"
+)
+stats_test2 = pd.read_pickle(
+    "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/stats_test2.pkl"
+)
+result_figure_test2 = Image.open(
+    "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/result_figure_test2.png"
+)
 size_test2 = 1000
-result_figure_test2 = {}
+
 
 result_encode_test3 = {}
 result_decode_test3 = {}

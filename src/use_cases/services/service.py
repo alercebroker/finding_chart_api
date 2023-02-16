@@ -45,8 +45,10 @@ def get_figure(img, stats, size):
     model = FigureModel(img, stats, size)
     fig, axes = model.create_figure()
     fig = model.add_figure_text(fig, axes)
-    # fig.savefig("results/result_figure_test2.png")
 
+    # fig.savefig(
+    #    "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/results/result_figure_test2.png"
+    # )
     # stats.to_pickle("results/stats_test2.pkl")
     return fig
 
