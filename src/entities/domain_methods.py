@@ -1,7 +1,4 @@
 import numpy as np
-import base64
-import matplotlib.pyplot as plt
-from io import BytesIO
 import PIL.ImageOps
 from src.entities.figure_model import FigureModel
 from astropy.coordinates import ICRS
@@ -35,23 +32,6 @@ def img_to_np_array(img):
     return img
 
 
-def get_figure(img, stats, size):
-    model = FigureModel(img, stats, size)
-    model.create_figure()
-    fig = model.add_figure_text()
-    return fig
-
-
-def fig_img_to_string(figure):
-    buf = BytesIO()
-    figure.savefig(buf, format="jpg", bbox_inches="tight", transparent=True)
-    buf.seek(0)
-    im = buf.read()
-    img_str = base64.b64encode(im).decode("utf-8")
-
-    return img_str
-
-
 def get_ICRS_coords(stats):
     coords = ICRS(stats.meanra * u.degree, stats.meandec * u.degree)
     ra = coords.ra.to_string(u.hour)
@@ -69,7 +49,8 @@ def format_first_and_last_detection(stats):
 
 def get_chart_image(img, stats, size):
     img_array = img_to_np_array(img)
-    fig = get_figure(img_array, stats, size)
-    img_str = fig_img_to_string(fig)
-
+    model = FigureModel(img_array, stats, size)
+    fig, axes = model.create_figure()
+    fig = model.add_figure_text(fig, axes)
+    img_str = model.fig_img_to_string(fig)
     return img_str
