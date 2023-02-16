@@ -29,11 +29,17 @@ def controller_get_chart(request, logo_path):
         else:
             return jsonify({"error": "object doesn't have detections"}), 400
 
-    request_dto = parse_controller_info_to_dto(
-        object_repo, api, oid, img_repo, PANSTARR_FILE_PATH, PANSTARR_CUTOUT_PATH, size
+    request_dto = parse_controller_info_to_dto(oid, size)
+
+    info_dict = gather_template_info(
+        request_dto,
+        object_repo,
+        img_repo,
+        api,
+        PANSTARR_FILE_PATH,
+        PANSTARR_CUTOUT_PATH,
     )
 
-    info_dict = gather_template_info(request_dto)
     info_dict["candid"] = candid
 
     return get_chart_template(info_dict)

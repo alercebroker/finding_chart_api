@@ -7,20 +7,27 @@ from src.entities.domain_methods import (
 )
 
 from src.interface_adapters.controllers.parser import RequestDto
+from src.interface_adapters.repos.image_repo import ImageRepo
+from src.interface_adapters.repos.object_repo import ObjectRepo
 
 
-def gather_template_info(request_dto: RequestDto):
+def gather_template_info(
+    request_dto: RequestDto,
+    object_repo: ObjectRepo,
+    img_repo: ImageRepo,
+    api,
+    PANSTARR_FILE_PATH,
+    PANSTARR_CUTOUT_PATH,
+):
 
     info_dict = {}
 
-    stats = get_object_stats(
-        request_dto.object_repo, request_dto.api, request_dto.oid, "pandas"
-    )
+    stats = get_object_stats(object_repo, api, request_dto.oid, "pandas")
 
     img = get_gray_img(
-        request_dto.img_repo,
-        request_dto.PANSTARR_FILE_PATH,
-        request_dto.PANSTARR_CUTOUT_PATH,
+        img_repo,
+        PANSTARR_FILE_PATH,
+        PANSTARR_CUTOUT_PATH,
         ra=stats.meanra,
         dec=stats.meandec,
         size=request_dto.size,
