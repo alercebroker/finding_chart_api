@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from io import BytesIO
+import base64
 
 
 class FigureModel:
@@ -45,3 +47,12 @@ class FigureModel:
         axes.axis("off")
 
         return fig
+
+    def fig_img_to_string(self, figure):
+        buf = BytesIO()
+        figure.savefig(buf, format="jpg", bbox_inches="tight", transparent=True)
+        buf.seek(0)
+        im = buf.read()
+        img_str = base64.b64encode(im).decode("utf-8")
+
+        return img_str
