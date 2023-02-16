@@ -52,5 +52,5 @@ def get_chart_image(img, stats, size):
     model = FigureModel(img_array, stats, size)
     fig, axes = model.create_figure()
     fig = model.add_figure_text(fig, axes)
-    img_str = model.if_img_to_string(fig)
+    img_str = model.fig_img_to_string(fig)
     return img_str
