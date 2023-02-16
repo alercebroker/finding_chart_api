@@ -33,4 +33,7 @@ def controller_get_chart(request, logo_path):
         object_repo, api, oid, img_repo, PANSTARR_FILE_PATH, PANSTARR_CUTOUT_PATH, size
     )
 
-    return get_chart_template(gather_template_info(request_dto))
+    info_dict = gather_template_info(request_dto)
+    info_dict["candid"] = candid
+
+    return get_chart_template(info_dict)
