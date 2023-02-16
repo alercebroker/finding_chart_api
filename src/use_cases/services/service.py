@@ -1,6 +1,5 @@
 import numpy as np
 import base64
-import matplotlib.pyplot as plt
 from io import BytesIO
 import PIL.ImageOps
 from src.entities.figure_model import FigureModel
@@ -9,7 +8,6 @@ from astropy import units as u
 from astropy.time import Time
 from src.use_cases.interfaces.object_interface import IObjectRepo
 from src.use_cases.interfaces.image_interface import IImageRepo
-import pandas as pd
 
 
 def get_object_stats(object_repo: IObjectRepo, api, oid, format):
@@ -32,47 +30,28 @@ def get_gray_img(
 
 # tests esto.
 def img_to_np_array(img):
-    # img.save("results/original_image.jpg", "JPEG")
     img = PIL.ImageOps.invert(img)
     img = np.asarray(img)
-    # np.savetxt("results/result_img_test1.txt", img)
+
     return img
 
 
 # tests esto.
 def get_figure(img, stats, size):
-    # np.savetxt("results/img_test2.txt", img)
     model = FigureModel(img, stats, size)
     fig, axes = model.create_figure()
     fig = model.add_figure_text(fig, axes)
 
-    # fig.savefig(
-    #    "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/results/result_figure_test2.png"
-    # )
-    # stats.to_pickle("results/stats_test2.pkl")
     return fig
 
 
-# tests esto con mock de base64 o de bytesIO ¡consultar!
+# tests esto
 def fig_img_to_string(figure):
-    # f = open("figure_test3.txt", "w")
-    # print(figure, file=f)
-    # f.close()
     buf = BytesIO()
-    # f = open("buf.txt", "w")
-    # print(buf, file=f)
-    # f.close()
     figure.savefig(buf, format="jpg", bbox_inches="tight", transparent=True)
     buf.seek(0)
     im = buf.read()
-    img_str = base64.b64encode(im)
-    # f = open("encoder_test3.txt", "w")
-    # print(img_str, file=f)
-    # f.close()
-    img_str = base64.b64decode("utf-8")
-    # f = open("decoder_test3.txt", "w")
-    # print(img_str, file=f)
-    # f.close()
+    img_str = base64.b64encode(im).decode("utf-8")
 
     return img_str
 
@@ -80,20 +59,8 @@ def fig_img_to_string(figure):
 # tests esto con mock de ICRS
 def get_ICRS_coords(stats):
     coords = ICRS(stats.meanra * u.degree, stats.meandec * u.degree)
-    # f = open("result_ICRS_test4.txt", "w")
-    # print(coords, file=f)
-    # f.close()
-    # f = open("stats_test4.txt", "w")
-    # print(stats, file=f)
-    # f.close()
     ra = coords.ra.to_string(u.hour)
     dec = coords.dec.to_string()
-    # f = open("ra_test4.txt", "w")
-    # print(ra, file=f)
-    # f.close()
-    # f = open("dec_test4.txt", "w")
-    # print(dec, file=f)
-    # f.close()
     return ra, dec
 
 

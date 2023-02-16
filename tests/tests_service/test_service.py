@@ -11,10 +11,9 @@ from results_service import (
     size_test2,
     img_test2,
     stats_test2,
-    result_encode_test3,
-    result_decode_test3,
+    result_figure_test2,
     figure_test3,
-    result_fig_img_test3,
+    result_test3,
     result_ra_test4,
     result_dec_test4,
     stats_test4,
@@ -40,19 +39,14 @@ class TestService(TestCase):
         self.assertTrue(
             filecmp.cmp(
                 "result_temporal.png",
-                "/home/usuario/Escritorio/proyecto2_alerce/finding_chart_api/tests/result_figure_test2.png",
+                result_figure_test2,
             )
         )
         os.remove("result_temporal.png")
 
-    @mock.patch("src.use_cases.services.service.base64.encode")
-    @mock.patch("src.use_cases.services.service.base64.decode")
-    def test_fig_img_to_string(self, decode_mock, encode_mock):
-        encode_mock.return_value = result_encode_test3
-        decode_mock.return_value = result_decode_test3
-
+    def test_fig_img_to_string(self):
         result = fig_img_to_string(figure_test3)
-        self.asserEqual(result, result_fig_img_test3)
+        self.assertEqual(result, result_test3)
 
     @mock.patch("src.use_cases.services.service.ICRS")
     def test_get_ICRS_coords(self, ICRS_mock):
