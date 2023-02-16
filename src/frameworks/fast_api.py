@@ -9,7 +9,7 @@ from src.interface_adapters.controllers.controller import (
     controller_get_chart,
 )
 
-from pydantic.dataclasses import dataclass
+from src.frameworks.input_models import GetChartInput
 
 app = FastAPI(
     description="Simple findingchart for ZTF objects.",
@@ -27,15 +27,6 @@ app.mount("/static", StaticFiles(directory=STATIC_PATH), name="static")
 @app.get("/")
 def index():
     return "ALeRCE Finding Chart Generator"
-
-
-@dataclass
-class GetChartInput:
-    oid: str = Query(description="Object ID.")
-    candid: str | None = Query(None, description="candid")
-    size: int = Query(
-        description="size of the image in pixels (width, height)", default=1000
-    )
 
 
 @app.get("/get_chart", response_class=HTMLResponse)
