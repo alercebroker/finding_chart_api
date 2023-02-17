@@ -16,39 +16,11 @@ img_test1 = img_test1.convert("L")
 result_img_test1 = np.loadtxt(
     os.path.join(os.getcwd(), "./tests/tests_service/test1/result_img_test1.txt")
 )
-# entrada
-img_test2 = np.loadtxt(
-    os.path.join(os.getcwd(), "./tests/tests_service/test2/img_test2.txt")
-)
-stats_test2 = pd.read_pickle(
-    os.path.join(os.getcwd(), "./tests/tests_service/test2/stats_test2.pkl")
-)
-size_test2 = 1000
-# salida
-result_figure_test2 = os.path.join(
-    os.getcwd(), "./tests/tests_service/test2/result_figure_test2.png"
-)
-
-
-# entrada
-figure_test3_img = mpimg.imread(
-    os.path.join(os.getcwd(), "./tests/tests_service/test3/figure_test3.png")
-)
-fig, ax = plt.subplots()
-figure_test3 = fig
-
-
-# salida
-with open(
-    os.path.join(os.getcwd(), "./tests/tests_service/test3/result_test3.txt"),
-    "r",
-) as f:
-    result_test3 = f.read()
 
 
 # entrada
 stats_test4 = pd.read_pickle(
-    os.path.join(os.getcwd(), "./tests/tests_service/test4/stats_test4.pkl")
+    os.path.join(os.getcwd(), "./tests/tests_service/test4/stats_test2.pkl")
 )
 
 # mock

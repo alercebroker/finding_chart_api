@@ -26,7 +26,6 @@ def get_gray_img(
     )
 
 
-# tests esto.
 def img_to_np_array(img):
     img = PIL.ImageOps.invert(img)
     img = np.asarray(img)
@@ -50,8 +49,8 @@ def format_first_and_last_detection(stats):
 
 def get_chart_image(img, stats, size):
     img_array = img_to_np_array(img)
-    model = FigureModel(img_array, stats, size)
-    fig, axes = model.create_figure()
-    fig = model.add_figure_text(fig, axes)
+    model = FigureModel()
+    fig, axes = model.create_figure(img)
+    fig = model.add_figure_text(fig, axes, stats, size)
     img_str = model.fig_img_to_string(fig)
     return img_str
