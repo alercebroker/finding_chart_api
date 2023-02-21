@@ -12,13 +12,13 @@ img_test1 = Image.open(
 img_test1 = img_test1.convert("L")
 # salida
 result_img_test1 = np.loadtxt(
-    os.path.join(os.getcwd(), "./tests/tests_domain_methods/test1/result_img_test1.txt")
+    os.path.join(os.getcwd(), "tests/tests_domain_methods/test1/result_img_test1.txt")
 )
 
 
 # entrada
 stats_test2 = pd.read_pickle(
-    os.path.join(os.getcwd(), "./tests/tests_domain_methods/test2/stats_test2.pkl")
+    os.path.join(os.getcwd(), "tests/tests_domain_methods/test2/stats_test2.pkl")
 )
 
 # mock
