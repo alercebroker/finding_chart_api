@@ -8,9 +8,9 @@ class FigureModel:
     def __init__(self):
         self.color = "blue"
 
-    def create_figure(self, img):
+    def create_figure(self, img_array):
         fig, axes = plt.subplots(1, figsize=(9, 9))
-        axes.matshow(img, cmap="Greys_r", interpolation="nearest")
+        axes.matshow(img_array, cmap="Greys_r", interpolation="nearest")
         alpha = 0.3
         # Adding cross
         #              --------------------modelo---------------------
