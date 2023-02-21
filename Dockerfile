@@ -7,4 +7,4 @@ COPY . /app
 EXPOSE 8000
 
 WORKDIR /app
-CMD ["uvicorn", "--host", "0.0.0.0", "--port", "5001", "src:app"]
+CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "src:app"]

@@ -5,15 +5,12 @@ import base64
 
 
 class FigureModel:
-    def __init__(self, img, stats, size):
-        self.img = img
-        self.stats = stats
-        self.size = size
-
-    def create_figure(self):
-        fig, axes = plt.subplots(1, figsize=(9, 9))
-        axes.matshow(self.img, cmap="Greys_r", interpolation="nearest")
+    def __init__(self):
         self.color = "blue"
+
+    def create_figure(self, img_array):
+        fig, axes = plt.subplots(1, figsize=(9, 9))
+        axes.matshow(img_array, cmap="Greys_r", interpolation="nearest")
         alpha = 0.3
         # Adding cross
         #              --------------------modelo---------------------
@@ -28,12 +25,12 @@ class FigureModel:
         axes.text(701 - 34, 701 - 80, "N", color=self.color)
         return fig, axes
 
-    def add_figure_text(self, fig, axes):
+    def add_figure_text(self, fig, axes, stats, size):
         # Text
         string = "PanSTARRS DR1\nra: {} dec: {}\nscale: 0.25 arcsec/pix\nfield size: {} arcsec".format(
-            np.round(self.stats.meanra, 5),
-            np.round(self.stats.meandec, 5),
-            self.size * 0.25,
+            np.round(stats.meanra, 5),
+            np.round(stats.meandec, 5),
+            size * 0.25,
         )
         axes.text(
             0.02,
@@ -45,7 +42,6 @@ class FigureModel:
             verticalalignment="top",
         )
         axes.axis("off")
-
         return fig
 
     def fig_img_to_string(self, figure):

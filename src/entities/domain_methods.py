@@ -29,6 +29,7 @@ def get_gray_img(
 def img_to_np_array(img):
     img = PIL.ImageOps.invert(img)
     img = np.asarray(img)
+
     return img
 
 
@@ -36,7 +37,6 @@ def get_ICRS_coords(stats):
     coords = ICRS(stats.meanra * u.degree, stats.meandec * u.degree)
     ra = coords.ra.to_string(u.hour)
     dec = coords.dec.to_string()
-
     return ra, dec
 
 
@@ -49,8 +49,8 @@ def format_first_and_last_detection(stats):
 
 def get_chart_image(img, stats, size):
     img_array = img_to_np_array(img)
-    model = FigureModel(img_array, stats, size)
-    fig, axes = model.create_figure()
-    fig = model.add_figure_text(fig, axes)
+    model = FigureModel()
+    fig, axes = model.create_figure(img_array)
+    fig = model.add_figure_text(fig, axes, stats, size)
     img_str = model.fig_img_to_string(fig)
     return img_str

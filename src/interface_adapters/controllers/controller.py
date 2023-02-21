@@ -1,5 +1,5 @@
 from alerce.core import Alerce
-from flask import jsonify
+from fastapi.encoders import jsonable_encoder
 from src.interface_adapters.controllers.parser import parse_controller_info_to_dto
 from src.interface_adapters.presenters.presenter import get_chart_template
 from src.interface_adapters.repos.image_repo import ImageRepo
@@ -24,7 +24,7 @@ def controller_get_chart(request, params, TEMPLATES_PATH):
         if len(dets) > 0:
             candid = dets[dets.has_stamp].iloc[0].candid
         else:
-            return jsonify({"error": "object doesn't have detections"}), 400
+            return jsonable_encoder({"error": "object doesn't have detections"}), 400
 
     request_dto = parse_controller_info_to_dto(oid, size)
 
